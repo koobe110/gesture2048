@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">2048</string>
+    <string name="score">分数:</string>
+    <string name="tvScore" />
+</resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.along.a2048.MainActivity">
+
+
+    <TextView
+        android:id="@+id/topScoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top:0"
+        android:textSize="40dp"
+        android:layout_marginTop="69dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score:0"
+        android:textSize="40dp"
+        android:layout_alignTop="@+id/topScoreText"
+        android:layout_alignParentStart="true" />
+
+    <com.along.a2048.GameView
+        android:id="@+id/gameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:columnCount="4"
+        android:foregroundGravity="bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="160dp"
+        android:paddingLeft="20px"
+        android:paddingRight="0px"
+
+        android:layout_marginBottom="40dp"></com.along.a2048.GameView>
+
+View>
+
+</RelativeLayout>
