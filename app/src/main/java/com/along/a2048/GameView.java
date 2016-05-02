@@ -10,9 +10,11 @@ import android.widget.GridLayout;
  * TODO: document your custom view class.
  */
 public class GameView extends GridLayout {
+
     private GestureDetector myGestureDetector;
     private int columns = 4;
     private int margin = 10;
+
     private ItemVIEW[][] cards = new ItemVIEW[columns][columns];
 
     public GameView(Context context) {
