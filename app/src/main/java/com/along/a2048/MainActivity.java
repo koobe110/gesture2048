@@ -3,12 +3,20 @@ package com.along.a2048;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.gesture.Gesture;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
+import android.gesture.GestureOverlayView;
+import android.gesture.Prediction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private GameView game;
@@ -18,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private int topScore;
     SharedPreferences preference;
     SharedPreferences.Editor editor;
+    private GestureOverlayView overlayView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,31 @@ public class MainActivity extends AppCompatActivity {
         editor = preference.edit();
         topScore = preference.getInt("topScore", 0);
         topScoreText.setText("Top:" + topScore);
+        overlayView = (GestureOverlayView) findViewById(R.id.gestureOverlayView);
+        final GestureLibrary library = GestureLibraries.fromRawResource(this, R.raw.gestures);
+        library.load();
+        overlayView.addOnGesturePerformedListener(new GestureOverlayView.OnGesturePerformedListener() {
+            @Override
+            public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
+                ArrayList<Prediction> myGesture = library.recognize(gesture);
+                Prediction prediction = myGesture.get(0);
+                if (prediction.score > 1) {
+                    if (prediction.name.equals("cheat")) {
+                        Toast.makeText(MainActivity.this, "折线手势", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < 3; i++) {
+                            game.cards[0][i].setNum(0);
+                        }
+                    }
+                    if (prediction.name.equals("circle")) {
+                        Toast.makeText(MainActivity.this, "圆圈手势", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < 3; i++) {
+                            game.cards[0][i].setNum(2 * game.cards[0][i].getNum());
+                        }
+                    }
+                }
+            }
+        });
+
     }
 
     private static MainActivity mainActivity;
@@ -44,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public void showScore() {
         scoreText.setText("Score:" + score);
     }
+
     public void showTopScore() {
         topScoreText.setText("Top:" + score);
     }
@@ -58,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void gameOver() {
         if (score > topScore) {
-            editor.putInt("topScore",score);
+            editor.putInt("topScore", score);
             editor.commit();
             showTopScore();
         }

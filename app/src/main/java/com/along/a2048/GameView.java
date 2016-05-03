@@ -15,7 +15,7 @@ public class GameView extends GridLayout {
     private int columns = 4;
     private int margin = 10;
 
-    private ItemVIEW[][] cards = new ItemVIEW[columns][columns];
+    public ItemVIEW[][] cards = new ItemVIEW[columns][columns];
 
     public GameView(Context context) {
         super(context);
@@ -74,7 +74,7 @@ public class GameView extends GridLayout {
     }
 
 
-    private void addCards() {
+    public void addCards() {
         ItemVIEW card;
         int num = 0;
         for (int x = 0; x < columns; x++) {
@@ -113,7 +113,9 @@ public class GameView extends GridLayout {
         }
         return true;
     }
+
     private boolean isMovedOrMerged = false;
+
     class gameGestureDetector extends GestureDetector.SimpleOnGestureListener {
         final int FLING_MIN_DISTANCE = 100;
 
@@ -131,7 +133,7 @@ public class GameView extends GridLayout {
             } else if (y < -FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
                 action(Action.UP);
             }
-            if (!isFull()&&isMovedOrMerged) {
+            if (!isFull() && isMovedOrMerged) {
                 addRandomNum();
                 isMovedOrMerged = false;
             }
@@ -162,11 +164,11 @@ public class GameView extends GridLayout {
         return true;
     }
 
-    private enum Action {
+    public enum Action {
         LEFT, RIGHT, UP, DOWN
     }
 
-    private void action(Action action) {
+    public void action(Action action) {
         if (action.toString().equals("LEFT")) {
             for (int x = 0; x < columns; x++) {
                 for (int y = 0; y < columns; y++) {
@@ -175,7 +177,7 @@ public class GameView extends GridLayout {
                             cards[x][y].setNum(cards[x][nextYs].getNum() * 2);
                             cards[x][nextYs].setNum(0);
                             MainActivity.getMainActivity().addScore(cards[x][y].getNum());
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
                             y--;
                             break;
                         }
@@ -185,7 +187,7 @@ public class GameView extends GridLayout {
                         if (cards[x][y].getNum() == 0 && cards[x][nextYs].getNum() != 0) {
                             cards[x][y].setNum(cards[x][nextYs].getNum());
                             cards[x][nextYs].setNum(0);
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             y--;
                             break;
@@ -202,7 +204,7 @@ public class GameView extends GridLayout {
                             cards[x][y].setNum(cards[x][nextYs].getNum() * 2);
                             cards[x][nextYs].setNum(0);
                             MainActivity.getMainActivity().addScore(cards[x][y].getNum());
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             y++;
 
@@ -214,7 +216,7 @@ public class GameView extends GridLayout {
                         if (cards[x][y].getNum() == 0 && cards[x][nextYs].getNum() != 0) {
                             cards[x][y].setNum(cards[x][nextYs].getNum());
                             cards[x][nextYs].setNum(0);
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             y++;
                             break;
@@ -231,7 +233,7 @@ public class GameView extends GridLayout {
                             cards[x][y].setNum(cards[nextXs][y].getNum() * 2);
                             cards[nextXs][y].setNum(0);
                             MainActivity.getMainActivity().addScore(cards[x][y].getNum());
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             x--;
 
@@ -243,7 +245,7 @@ public class GameView extends GridLayout {
                         if (cards[x][y].getNum() == 0 && cards[nextXs][y].getNum() != 0) {
                             cards[x][y].setNum(cards[nextXs][y].getNum());
                             cards[nextXs][y].setNum(0);
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             x--;
                             break;
@@ -260,7 +262,7 @@ public class GameView extends GridLayout {
                             cards[x][y].setNum(cards[nextXs][y].getNum() * 2);
                             cards[nextXs][y].setNum(0);
                             MainActivity.getMainActivity().addScore(cards[x][y].getNum());
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             x++;
                             break;
@@ -271,7 +273,7 @@ public class GameView extends GridLayout {
                         if (cards[x][y].getNum() == 0 && cards[nextXs][y].getNum() != 0) {
                             cards[x][y].setNum(cards[nextXs][y].getNum());
                             cards[nextXs][y].setNum(0);
-                            isMovedOrMerged=true;
+                            isMovedOrMerged = true;
 
                             x++;
                             break;
